@@ -3,30 +3,25 @@ import filecmp
 import csv
 from operator import itemgetter
 from collections import Counter
+from datetime import date
 
 def getData(file):
     somelist = []
     with open(file, "r") as somefile:
         
-        somelist = []
-        
-        somedictionary = csv.DictReader(somefile)
+        file_holder = csv.DictReader(somefile)
     
-        for lst in somedictionary:
-            
-            
+        for row in file_holder:
+
             tempdictionary = {}
             
-            tempdictionary["First"] = lst["First"]
-            tempdictionary["Last"] = lst["Last"]
-            tempdictionary["Email"] = lst["Email"]
-            tempdictionary["Class"] = lst["Class"]
-            tempdictionary["DOB"] = lst["DOB"]
+            tempdictionary["First"] = row["First"]
+            tempdictionary["Last"] = row["Last"]
+            tempdictionary["Email"] = row["Email"]
+            tempdictionary["Class"] = row["Class"]
+            tempdictionary["DOB"] = row["DOB"]
 
-            somelist.append(lst)
-
-        print(somelist)
-
+            somelist.append(row)
 
     return somelist
 
@@ -51,8 +46,6 @@ def classSizes(data):
 # ClassName and Class size, e.g 
 # [('Senior', 26), ('Junior', 25), ('Freshman', 21), ('Sophomore', 18)]
 
-
-# value = sorted(data, key= itemgetter(data))
     c = Counter()
     
     for size in data:
@@ -66,16 +59,26 @@ def classSizes(data):
 # Find the most common day of the year to be born
 
 def findDay(a):
-    
-# Input: list of dictionaries
-# Output: Return the day of month (1-31) that is the
-# most often seen in the DOB
+## Input: list of dictionaries
+## Output: Return the day of month (1-31) that is the
+## most often seen in the DOB
 
- day = sorted(data, key= itemgetter(a))
+    day_dic = {}
+    for value in a:
+        birthday = value['DOB']
+        day = birthday.split('/')
+        day_num = day[1]
+      
 
- return value[0]["DOB"] +
+        if day_num not in day_dic:
+            day_dic[day_num] = 1
+        else:
+            day_dic[day_num] +=1
+              
 
-
+    listday = list(day_dic.items())
+    listday = sorted(listday, key = lambda x: x[1], reverse = True)
+    return int(listday[0][0])
 
 #TASK FIVE
 
@@ -85,12 +88,33 @@ def findAge(a):
 # Output: Return the day of month (1-31) that is the
 # most often seen in the DOB
 
-#Your code here
-    pass
+month_dic = {}
 
+    today_date = date.today()
+    year_today = today_date.year
+    month_today = today_date.month
+        
+    #Month
+    
+        if month_num not in month_dic:
+            month_dic[month_num] = 1
+        else:
+            month_dic[month_num] +=1
+                
+    listmonth = list(month_dic.items())
+    listmonth = sorted(listmonth, key = lambda x: x[0], reverse = True)
+    return int(listmonth[0][0])
+    
+    #Year
+    
+    if year_num not in year_dic:
+        year_dic[year_num] = 1
+        else:
+            year_dic[year_num] +=1
 
-
-
+    listmonth = list(year_dic.items())
+    listmonth = sorted(listyear, key = lambda x: x[2], reverse = True)
+    return int(listmonth[0][0])
 
 
 #TASK SIX
@@ -101,9 +125,17 @@ def mySortPrint(a,col,fileName):
 #Input: list of dictionaries, key to sort by and output file name
 #Output: None
 
-#Your code here
-    pass
+    with open('fileName','wb') as csvfile:
+        filewriter = csv.writer(csvfile, delimiter= ',', quotechar='|',
+                            quoting= csv.QUOTE_MINIMAL)
 
+        filewriter.writerow(["First"])
+        filewriter.writerow(["Last"])
+        filewriter.writerow(["Class"])
+        filewriter.writerow(["DOB"])
+
+
+                        
 
 
 
