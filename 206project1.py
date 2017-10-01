@@ -3,7 +3,8 @@ import filecmp
 import csv
 from operator import itemgetter
 from collections import Counter
-from datetime import date
+
+# Task One
 
 def getData(file):
     somelist = []
@@ -20,7 +21,7 @@ def getData(file):
             tempdictionary["Email"] = row["Email"]
             tempdictionary["Class"] = row["Class"]
             tempdictionary["DOB"] = row["DOB"]
-
+            
             somelist.append(row)
 
     return somelist
@@ -88,33 +89,20 @@ def findAge(a):
 # Output: Return the day of month (1-31) that is the
 # most often seen in the DOB
 
-month_dic = {}
+    d= {}
+    
+    s=0
 
-    today_date = date.today()
-    year_today = today_date.year
-    month_today = today_date.month
-        
-    #Month
+    for value in a:
+        birthday = value['DOB']
+        day_num = birthday.split('/')
+        s+= (2017 - int(day_num[2]))
     
-        if month_num not in month_dic:
-            month_dic[month_num] = 1
-        else:
-            month_dic[month_num] +=1
-                
-    listmonth = list(month_dic.items())
-    listmonth = sorted(listmonth, key = lambda x: x[0], reverse = True)
-    return int(listmonth[0][0])
-    
-    #Year
-    
-    if year_num not in year_dic:
-        year_dic[year_num] = 1
-        else:
-            year_dic[year_num] +=1
+        print(s)
 
-    listmonth = list(year_dic.items())
-    listmonth = sorted(listyear, key = lambda x: x[2], reverse = True)
-    return int(listmonth[0][0])
+    avg= (round(s/(len(a))))
+
+    return avg
 
 
 #TASK SIX
@@ -124,21 +112,15 @@ month_dic = {}
 def mySortPrint(a,col,fileName):
 #Input: list of dictionaries, key to sort by and output file name
 #Output: None
-
-    with open('fileName','wb') as csvfile:
-        filewriter = csv.writer(csvfile, delimiter= ',', quotechar='|',
-                            quoting= csv.QUOTE_MINIMAL)
-
-        filewriter.writerow(["First"])
-        filewriter.writerow(["Last"])
-        filewriter.writerow(["Class"])
-        filewriter.writerow(["DOB"])
-
-
-                        
-
-
-
+    pass
+#    with open('fileName','wb') as csvfile:
+#        filewriter = csv.writer(csvfile, delimiter= ',', quotechar='|',
+#                            quoting= csv.QUOTE_MINIMAL)
+#
+#        filewriter.writerow(["First"])
+#        filewriter.writerow(["Last"])
+#        filewriter.writerow(["Class"])
+#        filewriter.writerow(["DOB"])
 
 
 ################################################################
